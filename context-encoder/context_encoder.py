@@ -33,7 +33,7 @@ os.makedirs("images", exist_ok=True)
 parser = argparse.ArgumentParser()
 parser.add_argument("--n_epochs", type=int, default=200, help="number of epochs of training")
 parser.add_argument("--batch_size", type=int, default=8, help="size of the batches")
-parser.add_argument("--dataset_name", type=str, default="img_align_celeba", help="name of the dataset")
+parser.add_argument("--dataset_name", type=str, default="train_images", help="name of the dataset")
 parser.add_argument("--lr", type=float, default=0.0002, help="adam: learning rate")
 parser.add_argument("--b1", type=float, default=0.5, help="adam: decay of first order momentum of gradient")
 parser.add_argument("--b2", type=float, default=0.999, help="adam: decay of first order momentum of gradient")
@@ -87,13 +87,13 @@ transforms_ = [
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
 ]
 dataloader = DataLoader(
-    ImageDataset("data/%s" % opt.dataset_name, transforms_=transforms_),
+    ImageDataset("../%s" % opt.dataset_name, transforms_=transforms_),
     batch_size=opt.batch_size,
     shuffle=True,
     num_workers=opt.n_cpu,
 )
 test_dataloader = DataLoader(
-    ImageDataset("data/%s" % opt.dataset_name, transforms_=transforms_, mode="val"),
+    ImageDataset("../%s" % opt.dataset_name, transforms_=transforms_, mode="val"),
     batch_size=12,
     shuffle=True,
     num_workers=1,
