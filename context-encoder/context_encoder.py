@@ -20,7 +20,7 @@ from PIL import Image
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torch.autograd import Variable
-
+import torch
 from datasets import *
 from models import *
 
@@ -177,3 +177,6 @@ for epoch in range(opt.n_epochs):
         batches_done = epoch * len(dataloader) + i
         if batches_done % opt.sample_interval == 0:
             save_sample(batches_done)
+
+
+torch.save(generator, 'generator.pth')
