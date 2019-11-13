@@ -17,6 +17,20 @@ class ImageDataset(Dataset):
         self.files = sorted(glob.glob("%s/*.png" % root))
         self.files = self.files[:-100] if mode == "train" else self.files[-100:]
 
+        self.mouth_positions = dict()
+
+        with open("../mouth_positions.txt", "r") as f:
+            for line in f:
+                # filename lefteye_x lefteye_y righteye_x righteye_y nose_x nose_y leftmouth_x leftmouth_y rightmouth_x rightmouth_y
+                s = line.strip().split()
+                filename = s[0][:-4]
+                leftmouth_x = int(s[-4])
+                leftmouth_y = int(s[-3])
+                rightmouth_x = int(s[-2])
+                rightmouth_y = int(s[-1])
+                # print("{}/{}.png".format(root, filename))
+                self.mouth_positions["{}/{}.png".format(root, filename)] = (leftmouth_x, leftmouth_y, rightmouth_x, rightmouth_y)
+
     def apply_random_mask(self, img):
         """Randomly masks image"""
         y1, x1 = np.random.randint(0, self.img_size - self.mask_size, 2)
@@ -36,9 +50,18 @@ class ImageDataset(Dataset):
 
         return masked_img, i
 
-    def __getitem__(self, index):
+    def apply_mustache_mask(self, img, filename):
+        """Mask mustache of image"""
+        leftmouth_x, leftmouth_y, rightmouth_x, rightmouth_y = self.mouth_positions[filename]
+        masked_part = img[:, leftmouth_y:rightmouth_y, leftmouth_x:rightmouth_x]
+        masked_img = img.clone()
+        masked_img[:, leftmouth_y:rightmouth_y, leftmouth_x:rightmouth_x] = 1
 
-        img = Image.open(self.files[index % len(self.files)])
+        return masked_img, masked_part
+
+    def __getitem__(self, index):
+        filename = self.files[index % len(self.files)]
+        img = Image.open(filename)
         img = self.transform(img)
         if self.mode == "train":
             # For training data perform random mask
@@ -46,6 +69,9 @@ class ImageDataset(Dataset):
         else:
             # For test data mask the center of the image
             masked_img, aux = self.apply_center_mask(img)
+
+            # For test data mask the mustache part
+            # masked_img, aux = self.apply_mustache_mask(img, filename)
 
         return img, masked_img, aux
 
