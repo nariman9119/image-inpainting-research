@@ -21,7 +21,7 @@ import torch
 os.makedirs("images", exist_ok=True)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--n_epochs", type=int, default=200, help="number of epochs of training")
+parser.add_argument("--n_epochs", type=int, default=100, help="number of epochs of training")
 parser.add_argument("--batch_size", type=int, default=8, help="size of the batches")
 parser.add_argument("--dataset_name", type=str, default="train_images", help="name of the dataset")
 parser.add_argument("--lr", type=float, default=0.0002, help="adam: learning rate")
@@ -167,6 +167,6 @@ for epoch in range(opt.n_epochs):
         batches_done = epoch * len(dataloader) + i
         if batches_done % opt.sample_interval == 0:
             save_sample(batches_done)
-
+            torch.save(generator, 'generator.pth')
 
 torch.save(generator, 'generator.pth')
