@@ -22,7 +22,7 @@ import torch
 cuda = True if torch.cuda.is_available() else False
 
 generator = torch.load('generator.pth')
-
+print(generator.summary)
 
 transforms_ = [
     transforms.Resize((128, 128), Image.BICUBIC),
