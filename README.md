@@ -14,3 +14,10 @@ Run AlexNet Based Encoder
 Train: Open jupyter notebook and run all the cells
 
 Test: Open jupyter notebook and run cells that load and test the model
+
+1. First ordered list item
+2. Another item
+⋅⋅* Unordered sub-list. 
+1. Actual numbers don't matter, just that it's a number
+⋅⋅1. Ordered sub-list
+4. And another item
