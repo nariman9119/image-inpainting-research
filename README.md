@@ -11,7 +11,7 @@ Run Default Context Encoder
 
 Run AlexNet Based Encoder
 
-Train: Open jupyter notebook and run all the cells
+  - Train: Open jupyter notebook and run all the cells
 
-Test: Open jupyter notebook and run cells that load and test the model
+  - Test: Open jupyter notebook and run cells that load and test the model
 
