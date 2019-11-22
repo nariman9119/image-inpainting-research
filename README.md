@@ -3,6 +3,8 @@ Conducted research on image inpainting task as a part of the Computer Vision cou
 
 Before running, install all the requirements that needed
 
+**To test model, pretrained models needed. Github cannot load such models.**
+
 Run Default Context Encoder
 
   - Train: python3 context-encoder.py
@@ -13,5 +15,5 @@ Run AlexNet Based Encoder
 
   - Train: Open jupyter notebook and run all the cells
 
-  - Test: Open jupyter notebook and run cells that load and test the model
+  - Test: Open jupyter notebook and run cells that load and test the model #gen.h5 need to be in the directory
 
